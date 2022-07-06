@@ -27,9 +27,12 @@ public class BattleLog : MonoBehaviour
                 logList.Add(line);
 
                 line = "\n";
+                
+                line += $"{s.TrimStart()}";
             }
-            
-            line += $"{s}";
+            else {
+                line += $"{s}";    
+            }
         }
 
         if (line.Length > 0)
