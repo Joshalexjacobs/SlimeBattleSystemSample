@@ -5,6 +5,6 @@ public class Item : MonoBehaviour {
 
     public string name;
     
-    public virtual void UseItem(Participant target) { }
+    public virtual void UseItem(Participant target, BattleLog battleLog) { }
     
 }

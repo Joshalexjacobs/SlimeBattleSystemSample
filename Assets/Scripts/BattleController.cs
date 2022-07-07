@@ -262,27 +262,26 @@ public class BattleController : MonoBehaviour
     {
         if (battleState == BattleState.PlayerTurn)
         {
-            // select spell
-            
-            // battleLog.UpdateLog($"{currentParticipant.name} chanted a spell...\n");
-            
             battleState = BattleState.SpellSelect;
         }
     }
     
     public void UseSpell(Spell spell) {
-        if (battleState == BattleState.ItemSelect) {
-            // item.UseItem(player);
-            //
-            // ItemsUI.SetActive(false);
-            //
-            // HeroCommandsUI.SetActive(false);
-            //
-            // HeroStatsUI.RefreshHeroStats();
+        if (battleState == BattleState.SpellSelect 
+            && currentParticipant.stats.magicPoints > spell.mpCost) {
+            currentParticipant.stats.magicPoints -= spell.mpCost;
+            
+            var targets = spell.DetermineTarget(participants);
+            
+            spell.UseSpell(targets, battleLog);
+            
+            spellsUI.SetActive(false);
+
+            heroCommandsUI.SetActive(false);
+            
+            heroStatsUI.RefreshHeroStats();
             
             soundManager.PlaySound(soundManager.castSpell);
-            
-            battleLog.UpdateLog($"{currentParticipant.name} chanted a spell...\n");
             
             battleState = BattleState.Started;
         }
@@ -292,25 +291,19 @@ public class BattleController : MonoBehaviour
     {
         if (battleState == BattleState.PlayerTurn)
         {
-            // select item
-            
-            // battleLog.UpdateLog($"{currentParticipant.name} used an item...\n");
-            
             battleState = BattleState.ItemSelect;
         }
     }
 
     public void UseItem(Item item) {
         if (battleState == BattleState.ItemSelect) {
-            item.UseItem(player);
+            item.UseItem(player, battleLog);
             
             itemsUI.SetActive(false);
             
             heroCommandsUI.SetActive(false);
             
             heroStatsUI.RefreshHeroStats();
-            
-            battleLog.UpdateLog($"{currentParticipant.name} used a {item.name}!\n");
             
             battleState = BattleState.Started;
         }

@@ -840,6 +840,7 @@ GameObject:
   - component: {fileID: 398763487}
   - component: {fileID: 398763489}
   - component: {fileID: 398763488}
+  - component: {fileID: 398763490}
   m_Layer: 5
   m_Name: Hurt
   m_TagString: Untagged
@@ -924,6 +925,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1357105557}
+        m_TargetAssemblyTypeName: BattleController, Assembly-CSharp
+        m_MethodName: UseSpell
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 398763490}
+          m_ObjectArgumentAssemblyTypeName: Spell, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &398763489
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -932,6 +945,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 398763486}
   m_CullTransparentMesh: 1
+--- !u!114 &398763490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398763486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bd921705eb45c5449ddf368a298afbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Hurt
+  mpCost: 2
+  damageAmount: 12
 --- !u!1 &467429580
 GameObject:
   m_ObjectHideFlags: 0
@@ -1941,7 +1969,9 @@ MonoBehaviour:
     turnOrder: 0
     stats:
       hitPoints: 15
-      magicPoints: 0
+      maxHitPoints: 15
+      magicPoints: 99
+      maxMagicPoints: 0
       strength: 5
       agility: 6
       attackPower: 5
@@ -2042,86 +2072,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809169913}
-  m_CullTransparentMesh: 1
---- !u!1 &817426065
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 817426066}
-  - component: {fileID: 817426068}
-  - component: {fileID: 817426067}
-  m_Layer: 5
-  m_Name: Sleep Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &817426066
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 817426065}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1492399515}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &817426067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 817426065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: 3c30cbda2d5634510b70fa5a6931b992, type: 3}
-    m_FontSize: 8
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 54
-    m_Alignment: 3
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: SLEEP
---- !u!222 &817426068
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 817426065}
   m_CullTransparentMesh: 1
 --- !u!1 &879791599
 GameObject:
@@ -2459,6 +2409,7 @@ GameObject:
   - component: {fileID: 901840873}
   - component: {fileID: 901840875}
   - component: {fileID: 901840874}
+  - component: {fileID: 901840876}
   m_Layer: 5
   m_Name: Heal
   m_TagString: Untagged
@@ -2543,6 +2494,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1357105557}
+        m_TargetAssemblyTypeName: BattleController, Assembly-CSharp
+        m_MethodName: UseSpell
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 901840876}
+          m_ObjectArgumentAssemblyTypeName: Spell, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &901840875
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2551,6 +2514,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 901840872}
   m_CullTransparentMesh: 1
+--- !u!114 &901840876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 901840872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df11acb89931a924097e48b6d08a166e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Heal
+  mpCost: 4
+  recoveryAmount: 17
 --- !u!1 &1011034381
 GameObject:
   m_ObjectHideFlags: 0
@@ -2849,14 +2827,13 @@ RectTransform:
   - {fileID: 467429581}
   - {fileID: 901840873}
   - {fileID: 398763487}
-  - {fileID: 1492399515}
   m_Father: {fileID: 1011034385}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 53, y: 174.50128}
-  m_SizeDelta: {x: 96.9955, y: 64.9975}
+  m_AnchoredPosition: {x: 53, y: 182.43843}
+  m_SizeDelta: {x: 96.9955, y: 49.1232}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1074007909
 MonoBehaviour:
@@ -3186,6 +3163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Medicinal Herb
+  recoveryAmount: 15
 --- !u!1 &1357105555
 GameObject:
   m_ObjectHideFlags: 0
@@ -3240,7 +3218,9 @@ MonoBehaviour:
     turnOrder: 0
     stats:
       hitPoints: 1
+      maxHitPoints: 1
       magicPoints: 1
+      maxMagicPoints: 1
       strength: 1
       agility: 1
       attackPower: 1
@@ -3262,7 +3242,9 @@ MonoBehaviour:
     turnOrder: 0
     stats:
       hitPoints: 1
+      maxHitPoints: 1
       magicPoints: 1
+      maxMagicPoints: 1
       strength: 1
       agility: 1
       attackPower: 1
@@ -3284,7 +3266,9 @@ MonoBehaviour:
     turnOrder: 0
     stats:
       hitPoints: 1
+      maxHitPoints: 1
       magicPoints: 1
+      maxMagicPoints: 1
       strength: 1
       agility: 1
       attackPower: 1
@@ -3594,109 +3578,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1454406956}
-  m_CullTransparentMesh: 1
---- !u!1 &1492399514
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1492399515}
-  - component: {fileID: 1492399517}
-  - component: {fileID: 1492399516}
-  m_Layer: 5
-  m_Name: Sleep
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1492399515
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1492399514}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 817426066}
-  m_Father: {fileID: 1074007908}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -50.44}
-  m_SizeDelta: {x: -20, y: 11}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1492399516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1492399514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 602002499}
-        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
-        m_MethodName: PlaySound
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 242376082}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!222 &1492399517
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1492399514}
   m_CullTransparentMesh: 1
 --- !u!1 &1520068902
 GameObject:
@@ -5178,7 +5059,9 @@ MonoBehaviour:
     turnOrder: 0
     stats:
       hitPoints: 3
+      maxHitPoints: 1
       magicPoints: 0
+      maxMagicPoints: 1
       strength: 5
       agility: 3
       attackPower: 5

@@ -43,20 +43,6 @@ public class BattleLog : MonoBehaviour
         foreach (var l in logList)
         {
             this.text.text += l;
-
-            // if (this.text.text.Split("\n").Length > maxLines)
-            // {
-            //     var currentLog = this.text.text.Split("\n").ToList();
-            //     
-            //     currentLog.RemoveAt(0);
-            //
-            //     for (int i = 0; i < currentLog.Count - 1; i++)
-            //     {
-            //         currentLog[i] += "\n";
-            //     }
-            //     
-            //     this.text.text = currentLog.Aggregate((a, b) => a + b);
-            // }
         }
 
         var numberOfLines = this.text.text.Split("\n").Length;
@@ -64,14 +50,7 @@ public class BattleLog : MonoBehaviour
         if (numberOfLines > maxLines)
         {
             var pattern = @"(?=\n)";
-            
-            // var currentLog = this.text.text.Split("\n").ToList();
-            
-            // var currentLog = Regex.Split(this.text.text, pattern).ToList();
-            // var testText = "A slime draws near!\n\nCommand?\n\nHero Attacks!\n\nSlime took 7 damage.\n\nSlimeAttacks!";
-            
-            // Debug.Log(testText);
-            
+
             var currentLog = Regex.Split(this.text.text, pattern, RegexOptions.Multiline).ToList();
 
             if (numberOfLines > maxLines)
