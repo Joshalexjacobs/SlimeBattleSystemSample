@@ -1,3 +1,4 @@
+using SlimeBattleSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,27 +16,30 @@ public class HeroStatsUI : MonoBehaviour
     [SerializeField] private Text gpText;
     
     [SerializeField] private Text xpText;
+    
+    [SerializeField] private BattleController battleController;
+    
+    private Participant playerParticipant;
 
-    [SerializeField] private Combatant playerCombatant;
-
-    private void Start()
-    {
+    private void Start() {
+        playerParticipant = battleController.GetPlayerParticipant();
+        
         RefreshHeroStats();
     }
 
     public void RefreshHeroStats()
     {
-        heroNameText.text = playerCombatant.participant.name;
+        heroNameText.text = playerParticipant.name;
         
-        // levelText.text = playerCombatant.participant.stats;
+        levelText.text = playerParticipant.stats.level.ToString();
         
-        hpText.text = playerCombatant.participant.stats.hitPoints.ToString();
+        hpText.text = playerParticipant.stats.hitPoints.ToString();
         
-        mpText.text = playerCombatant.participant.stats.magicPoints.ToString();
+        mpText.text = playerParticipant.stats.magicPoints.ToString();
         
-        gpText.text = playerCombatant.participant.goldPoints.ToString();
+        gpText.text = playerParticipant.goldPoints.ToString();
         
-        xpText.text = playerCombatant.participant.experiencePoints.ToString();
+        xpText.text = playerParticipant.experiencePoints.ToString();
     }
     
 }

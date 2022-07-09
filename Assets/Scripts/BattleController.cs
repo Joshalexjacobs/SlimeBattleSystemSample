@@ -20,13 +20,13 @@ public class BattleController : MonoBehaviour
 
     [SerializeField] private List<Combatant> combatants;
 
-    [SerializeField] private List<Participant> participants;
+    private List<Participant> participants;
     
-    [SerializeField] private Participant enemy;
+    private Participant enemy;
     
-    [SerializeField] private Participant player;
+    private Participant player;
     
-    [SerializeField] private Participant currentParticipant;
+    private Participant currentParticipant;
 
     [SerializeField] private HeroStatsUI heroStatsUI;
 
@@ -54,7 +54,7 @@ public class BattleController : MonoBehaviour
         
             participants = BattleSystem.DetermineTurnOrder(participants);
             
-            player = BattleSystem.GetPlayerParticipants(participants)[0];
+            player = GetPlayerParticipant();
             
             enemy = BattleSystem.GetEnemyParticipants(participants)[0];
 
@@ -62,6 +62,10 @@ public class BattleController : MonoBehaviour
 
             StartCoroutine(TraverseParticipants());   
         }
+    }
+
+    public Participant GetPlayerParticipant() {
+        return BattleSystem.GetPlayerParticipants(participants)[0];
     }
 
     private readonly List<BattleState> pendingBattleStates = new () {
@@ -117,27 +121,41 @@ public class BattleController : MonoBehaviour
                 
                 var enemyCombatant = BattleUtil.GetMatchingCombatant(enemy, combatants);
                 
+                var playerCombatant = BattleUtil.GetMatchingCombatant(player, combatants);
+                
                 enemyCombatant.OnDefeat.Invoke();
                 
                 battleLog.UpdateLog($"Thou hast done well in defeating the {enemy.name}.\n");
 
                 yield return new WaitForSeconds(0.5f);
                 
-                // TODO: swap out for single participant call
-                var experiencePoints = BattleSystem.DetermineExperiencePoints(new List<Participant>() { enemy });
+                var experiencePoints = BattleSystem.DetermineExperiencePoints(enemy);
 
                 battleLog.UpdateLog($"Thy Experience increases by {experiencePoints}.\n");
                 
                 yield return new WaitForSeconds(0.5f);
                 
-                // TODO: swap out for single participant call
-                var goldPoints = BattleSystem.DetermineGoldPoints(new List<Participant>() { enemy });
+                var goldPoints = BattleSystem.DetermineGoldPoints(enemy);
 
                 if (goldPoints > 0)
                 {
                     battleLog.UpdateLog($"Thy GOLD increases by {goldPoints}.\n");
                     
                     yield return new WaitForSeconds(0.5f);
+                }
+
+                Dictionary<Item, int> droppableItems = new Dictionary<Item, int>(); 
+                
+                foreach (var enemyCombatantDroppableItem in enemyCombatant.droppableItems) {
+                    droppableItems.Add(enemyCombatantDroppableItem.item, enemyCombatantDroppableItem.chanceToDrop);
+                }
+                
+                var itemsDropped = BattleSystem.DetermineItemsDropped(droppableItems);
+                
+                foreach (Item item in itemsDropped) {
+                    battleLog.UpdateLog($"{enemy.name} dropped a {item.name}!\n");
+                    
+                    playerCombatant.items.Add(item);
                 }
             }
             else
@@ -228,13 +246,12 @@ public class BattleController : MonoBehaviour
         if (battleState == BattleState.PlayerTurn)
         {
             battleLog.UpdateLog($"{currentParticipant.name} started to run away...\n");
-            
-            // TODO: swap out for single participant call
-            StartCoroutine(FleeRoutine(new List<Participant>() { enemy }));
+
+            StartCoroutine(FleeRoutine());
         }
     }
 
-    private IEnumerator FleeRoutine(List<Participant> runningFrom)
+    private IEnumerator FleeRoutine()
     {
         yield return new WaitForSeconds(0.5f);
         
@@ -309,4 +326,14 @@ public class BattleController : MonoBehaviour
         }
     }
 
+    private void Update() {
+        if (battleState is BattleState.ItemSelect or BattleState.SpellSelect 
+            && Input.GetKeyDown(KeyCode.Escape)) {
+            itemsUI.SetActive(false);
+            
+            spellsUI.SetActive(false);
+
+            battleState = BattleState.PlayerTurn;
+        }
+    }
 }
