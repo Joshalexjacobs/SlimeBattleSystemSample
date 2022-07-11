@@ -1,4 +1,4 @@
-# SlimeBattleSystemSample
+# Slime Battle System Unity Sample
 A sample Unity project that utilizes the [SlimeBattleSystem library.](https://github.com/Joshalexjacobs/SlimeBattleSystem)
 
 To run, just clone this repo and open it with Unity version 2021.3.5f1 or later.
