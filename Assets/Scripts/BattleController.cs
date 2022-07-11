@@ -60,7 +60,7 @@ public class BattleController : MonoBehaviour
 
             battleLog.UpdateLog($"A {enemyCombatant.participant.Name} draws near!\n");
 
-            StartCoroutine(TraverseParticipants());   
+            StartCoroutine(BattleLoop());   
         }
     }
 
@@ -74,7 +74,7 @@ public class BattleController : MonoBehaviour
         BattleState.ItemSelect
     };
 
-    private IEnumerator TraverseParticipants()
+    private IEnumerator BattleLoop()
     {
         yield return new WaitForSeconds(0.5f);
         
@@ -182,7 +182,7 @@ public class BattleController : MonoBehaviour
         }
         else if (battleState != BattleState.Ended)
         {
-            StartCoroutine(TraverseParticipants());
+            StartCoroutine(BattleLoop());
         }
     }
 
