@@ -137,11 +137,7 @@ public class BattleController : MonoBehaviour
                 // player won
                 
                 soundManager.PlaySound(soundManager.battleOver);
-                
-                // var enemyCombatant = BattleUtil.GetMatchingCombatant(enemy, combatants);
-                
-                // var playerCombatant = BattleUtil.GetMatchingCombatant(player, combatants);
-                
+
                 enemyCombatant.OnDefeat.Invoke();
                 
                 battleLog.UpdateLog($"Thou hast done well in defeating the {enemyCombatant.participant.Name}.\n");
