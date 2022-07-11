@@ -15,6 +15,6 @@ using SlimeBattleSystem;
 
 ...
 
-participants = BattleSystem.DetermineTurnOrder(participants);
+var orderedParticipants = BattleSystem.DetermineTurnOrder(participants);
 
 ```
