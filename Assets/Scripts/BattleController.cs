@@ -215,20 +215,20 @@ public class BattleController : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        switch (results.attackType)
+        switch (results.Type)
         {
-            case AttackResults.AttackType.Hit:
-                battleLog.UpdateLog($"{target.Name}'s Hit Points have been reduced by {results.damage}.\n");
+            case AttackResult.AttackType.Hit:
+                battleLog.UpdateLog($"{target.Name}'s Hit Points have been reduced by {results.Damage}.\n");
 
                 break;
-            case AttackResults.AttackType.CriticalHit:
+            case AttackResult.AttackType.CriticalHit:
                 battleLog.UpdateLog($"Critical hit!!!\n");
                 
-                battleLog.UpdateLog($"{target.Name}'s Hit Points have been reduced by {results.damage}.\n");
+                battleLog.UpdateLog($"{target.Name}'s Hit Points have been reduced by {results.Damage}.\n");
                 
                 break;
             
-            case AttackResults.AttackType.Missed:
+            case AttackResult.AttackType.Missed:
                 battleLog.UpdateLog($"Missed! {target.Name} dodged the attack.\n");
                 
                 soundManager.PlaySound(soundManager.miss);
@@ -236,7 +236,7 @@ public class BattleController : MonoBehaviour
                 break;
         }
 
-        if (results.damage > 0) {
+        if (results.Damage > 0) {
             soundManager.PlaySound(soundManager.hit);
             
             var targetCombatant = BattleUtil.GetMatchingCombatant(target, combatants);
@@ -248,7 +248,7 @@ public class BattleController : MonoBehaviour
             }
         }
 
-        target.InflictDamage(results.damage);
+        target.InflictDamage(results.Damage);
         
         heroStatsUI.RefreshHeroStats();
         
