@@ -21,11 +21,11 @@ public class BattleController : MonoBehaviour
     [SerializeField] private List<Combatant> combatants;
 
     private List<Participant> participants;
-    
-    private Participant enemy;
-    
-    private Participant player;
-    
+
+    private Combatant enemyCombatant;
+
+    private Combatant playerCombatant;
+
     private Participant currentParticipant;
 
     [SerializeField] private HeroStatsUI heroStatsUI;
@@ -53,12 +53,12 @@ public class BattleController : MonoBehaviour
             participants = combatants.Select(combatant => combatant.participant).ToList();
         
             participants = BattleSystem.DetermineTurnOrder(participants);
-            
-            player = GetPlayerParticipant();
-            
-            enemy = BattleSystem.GetEnemyParticipants(participants)[0];
 
-            battleLog.UpdateLog($"A {enemy.Name} draws near!\n");
+            enemyCombatant = BattleUtil.GetMatchingCombatant(BattleSystem.GetEnemyParticipants(participants)[0], combatants);
+                
+            playerCombatant = BattleUtil.GetMatchingCombatant(GetPlayerParticipant(), combatants);
+
+            battleLog.UpdateLog($"A {enemyCombatant.participant.Name} draws near!\n");
 
             StartCoroutine(TraverseParticipants());   
         }
@@ -87,9 +87,28 @@ public class BattleController : MonoBehaviour
 
                 if (participant.ParticipantType == ParticipantType.Enemy)
                 {
-                    battleState = BattleState.EnemyTurn; 
-                    
-                    yield return StartCoroutine(HandleEnemyTurn());
+                    battleState = BattleState.EnemyTurn;
+
+                    var action = enemyCombatant.DetermineAction();
+
+                    switch (action.Type) {
+                        case CombatantActionType.Attack:
+                            yield return StartCoroutine(HandleEnemyTurn());
+                            
+                            break;
+                        case CombatantActionType.Item:
+                            // handle enemy using an item
+                            
+                            break;
+                        case CombatantActionType.Spell:
+                            // handle enemy chanting a spell
+                            
+                            break;
+                        case CombatantActionType.Flee:
+                            // handle enemy fleeing
+                            
+                            break;
+                    }
                 } else if (participant.ParticipantType == ParticipantType.Player)
                 {
                     battleState = BattleState.PlayerTurn;
@@ -113,29 +132,29 @@ public class BattleController : MonoBehaviour
             
             soundManager.StopSound(soundManager.battleMusic);
 
-            if (enemy.Stats.HitPoints <= 0)
+            if (enemyCombatant.participant.Stats.HitPoints <= 0)
             {
                 // player won
                 
                 soundManager.PlaySound(soundManager.battleOver);
                 
-                var enemyCombatant = BattleUtil.GetMatchingCombatant(enemy, combatants);
+                // var enemyCombatant = BattleUtil.GetMatchingCombatant(enemy, combatants);
                 
-                var playerCombatant = BattleUtil.GetMatchingCombatant(player, combatants);
+                // var playerCombatant = BattleUtil.GetMatchingCombatant(player, combatants);
                 
                 enemyCombatant.OnDefeat.Invoke();
                 
-                battleLog.UpdateLog($"Thou hast done well in defeating the {enemy.Name}.\n");
+                battleLog.UpdateLog($"Thou hast done well in defeating the {enemyCombatant.participant.Name}.\n");
 
                 yield return new WaitForSeconds(0.5f);
                 
-                var experiencePoints = BattleSystem.DetermineExperiencePoints(enemy);
+                var experiencePoints = BattleSystem.DetermineExperiencePoints(enemyCombatant.participant);
 
                 battleLog.UpdateLog($"Thy Experience increases by {experiencePoints}.\n");
                 
                 yield return new WaitForSeconds(0.5f);
                 
-                var goldPoints = BattleSystem.DetermineGoldPoints(enemy);
+                var goldPoints = BattleSystem.DetermineGoldPoints(enemyCombatant.participant);
 
                 if (goldPoints > 0)
                 {
@@ -150,10 +169,10 @@ public class BattleController : MonoBehaviour
                     droppableItems.Add(enemyCombatantDroppableItem.item, enemyCombatantDroppableItem.chanceToDrop);
                 }
                 
-                var itemsDropped = BattleSystem.DetermineItemsDropped(droppableItems);
+                var itemsDropped = BattleSystem.DetermineItemsDropped<Item>(droppableItems);
                 
                 foreach (Item item in itemsDropped) {
-                    battleLog.UpdateLog($"{enemy.Name} dropped a {item.name}!\n");
+                    battleLog.UpdateLog($"{enemyCombatant.participant.Name} dropped a {item.name}!\n");
                     
                     playerCombatant.items.Add(item);
                 }
@@ -183,7 +202,7 @@ public class BattleController : MonoBehaviour
     {
         heroCommandsUI.SetActive(false);
         
-        yield return StartCoroutine(HandleAttack(enemy));
+        yield return StartCoroutine(HandleAttack(enemyCombatant.participant));
 
         battleState = BattleState.Started;
     }
@@ -224,13 +243,12 @@ public class BattleController : MonoBehaviour
         
             targetCombatant.OnHurt.Invoke();
 
-            if (target == player) {
+            if (target == playerCombatant.participant) {
                 screenShake.TriggerShake();   
             }
         }
 
         target.InflictDamage(results.damage);
-        // target.stats.hitPoints -= results.damage;
         
         heroStatsUI.RefreshHeroStats();
         
@@ -241,7 +259,7 @@ public class BattleController : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
             
-        yield return StartCoroutine(HandleAttack(player));
+        yield return StartCoroutine(HandleAttack(playerCombatant.participant));
     }
     
     public void Flee()
@@ -258,7 +276,7 @@ public class BattleController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         
-        bool result = BattleSystem.DetermineParticipantFleeing(currentParticipant, enemy, BattleSystem.Random);
+        bool result = BattleSystem.DetermineParticipantFleeing(currentParticipant, enemyCombatant.participant);
 
         if (!result)
         {
@@ -317,7 +335,7 @@ public class BattleController : MonoBehaviour
 
     public void UseItem(Item item) {
         if (battleState == BattleState.ItemSelect) {
-            item.UseItem(player, battleLog);
+            item.UseItem(playerCombatant.participant, battleLog);
             
             itemsUI.SetActive(false);
             
