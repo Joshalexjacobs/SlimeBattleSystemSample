@@ -16,9 +16,9 @@ public class Hurt : Spell
     foreach (var participant in targets) {
       var randomizedDamageAmount = (int)(damageAmount * Random.Range(0.6f, 1f));
 
-      participant.stats.hitPoints -= randomizedDamageAmount;
+      participant.Stats.HitPoints -= randomizedDamageAmount;
 
-      battleLog.UpdateLog($"{participant.name} chanted {name} and dealt {randomizedDamageAmount} damage to {participant.name}!\n");
+      battleLog.UpdateLog($"{participant.Name} chanted {name} and dealt {randomizedDamageAmount} damage to {participant.Name}!\n");
     }
   }
 }

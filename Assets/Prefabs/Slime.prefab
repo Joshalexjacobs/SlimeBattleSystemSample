@@ -119,22 +119,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   participant:
-    name: Slime
+    ExperiencePoints: 0
+    GoldPoints: 0
+    Name: 
     ParticipantType: 2
-    turnOrder: 0
-    stats:
-      hitPoints: 3
-      maxHitPoints: 3
-      magicPoints: 0
-      maxMagicPoints: 1
-      strength: 5
-      agility: 3
-      attackPower: 5
-      defensePower: 1
-      dodge: 1
-      level: 1
-    experiencePoints: 1
-    goldPoints: 2
+    Stats:
+      Strength: 5
+      Agility: 3
+      HitPoints: 3
+      MaxHitPoints: 3
+      MagicPoints: 0
+      MaxMagicPoints: 0
+      AttackPower: 5
+      DefensePower: 1
+      Dodge: 1
+      Level: 1
+    TurnOrder: 0
   droppableItems:
   - item: {fileID: 8533265181663771110, guid: 738e56e22f38d1e489eb0a57b0eaea96, type: 3}
     chanceToDrop: 5

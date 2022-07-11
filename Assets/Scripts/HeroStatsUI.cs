@@ -29,17 +29,17 @@ public class HeroStatsUI : MonoBehaviour
 
     public void RefreshHeroStats()
     {
-        heroNameText.text = playerParticipant.name;
+        heroNameText.text = playerParticipant.Name;
         
-        levelText.text = playerParticipant.stats.level.ToString();
+        levelText.text = playerParticipant.Stats.Level.ToString();
         
-        hpText.text = playerParticipant.stats.hitPoints.ToString();
+        hpText.text = playerParticipant.Stats.HitPoints.ToString();
         
-        mpText.text = playerParticipant.stats.magicPoints.ToString();
+        mpText.text = playerParticipant.Stats.MagicPoints.ToString();
         
-        gpText.text = playerParticipant.goldPoints.ToString();
+        gpText.text = playerParticipant.GoldPoints.ToString();
         
-        xpText.text = playerParticipant.experiencePoints.ToString();
+        xpText.text = playerParticipant.ExperiencePoints.ToString();
     }
     
 }

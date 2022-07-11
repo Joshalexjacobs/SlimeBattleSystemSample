@@ -119,22 +119,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   participant:
-    name: Skeleton
+    ExperiencePoints: 11
+    GoldPoints: 29
+    Name: Skeleton
     ParticipantType: 2
-    turnOrder: 0
-    stats:
-      hitPoints: 30
-      maxHitPoints: 30
-      magicPoints: 0
-      maxMagicPoints: 1
-      strength: 28
-      agility: 22
-      attackPower: 28
-      defensePower: 22
-      dodge: 4
-      level: 1
-    experiencePoints: 11
-    goldPoints: 29
+    Stats:
+      Strength: 28
+      Agility: 22
+      HitPoints: 30
+      MaxHitPoints: 30
+      MagicPoints: 0
+      MaxMagicPoints: 0
+      AttackPower: 28
+      DefensePower: 22
+      Dodge: 4
+      Level: 1
+    TurnOrder: 0
   droppableItems:
   - item: {fileID: 8533265181663771110, guid: 738e56e22f38d1e489eb0a57b0eaea96, type: 3}
     chanceToDrop: 50

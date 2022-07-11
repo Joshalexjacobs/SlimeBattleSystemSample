@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3010018898257616269}
   - component: {fileID: 3010018898257616271}
   m_Layer: 0
-  m_Name: Hero - Lvl 8
+  m_Name: Hero - Lvl 10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,22 +45,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   participant:
-    name: Hero
+    ExperiencePoints: 2
+    GoldPoints: 120
+    Name: Hero
     ParticipantType: 0
-    turnOrder: 0
-    stats:
-      hitPoints: 31
-      maxHitPoints: 31
-      magicPoints: 24
-      maxMagicPoints: 24
-      strength: 18
-      agility: 16
-      attackPower: 18
-      defensePower: 16
-      dodge: 1
-      level: 8
-    experiencePoints: 2
-    goldPoints: 120
+    Stats:
+      Strength: 31
+      Agility: 24
+      HitPoints: 39
+      MaxHitPoints: 39
+      MagicPoints: 32
+      MaxMagicPoints: 32
+      AttackPower: 31
+      DefensePower: 12
+      Dodge: 1
+      Level: 10
+    TurnOrder: 0
   droppableItems: []
   items: []
   OnHurt:

@@ -8,7 +8,7 @@ public static class BattleUtil
   public static Combatant GetMatchingCombatant(Participant participant, List<Combatant> combatants) {
     var result = combatants.Where((combatant) => combatant.participant == participant).ToArray();
     
-    return result.Length > 0 ? result[0] : null;
+    return result.Length > 0 ? result[0] : null; 
   }
 
 }

@@ -44,7 +44,7 @@ public class BattleController : MonoBehaviour
 
     private BattleState battleState = BattleState.Pending;
 
-    private void Start()
+    private void Awake()
     {
         if (battleState == BattleState.Pending)
         {
@@ -58,7 +58,7 @@ public class BattleController : MonoBehaviour
             
             enemy = BattleSystem.GetEnemyParticipants(participants)[0];
 
-            battleLog.UpdateLog($"A {enemy.name} draws near!\n");
+            battleLog.UpdateLog($"A {enemy.Name} draws near!\n");
 
             StartCoroutine(TraverseParticipants());   
         }
@@ -82,7 +82,7 @@ public class BattleController : MonoBehaviour
         {
             currentParticipant = participant;
 
-            if (participant.stats.hitPoints > 0 && !BattleSystem.IsBattleOver(participants) && battleState != BattleState.Ended)
+            if (participant.Stats.HitPoints > 0 && !BattleSystem.IsBattleOver(participants) && battleState != BattleState.Ended)
             {
 
                 if (participant.ParticipantType == ParticipantType.Enemy)
@@ -113,7 +113,7 @@ public class BattleController : MonoBehaviour
             
             soundManager.StopSound(soundManager.battleMusic);
 
-            if (enemy.stats.hitPoints <= 0)
+            if (enemy.Stats.HitPoints <= 0)
             {
                 // player won
                 
@@ -125,7 +125,7 @@ public class BattleController : MonoBehaviour
                 
                 enemyCombatant.OnDefeat.Invoke();
                 
-                battleLog.UpdateLog($"Thou hast done well in defeating the {enemy.name}.\n");
+                battleLog.UpdateLog($"Thou hast done well in defeating the {enemy.Name}.\n");
 
                 yield return new WaitForSeconds(0.5f);
                 
@@ -153,7 +153,7 @@ public class BattleController : MonoBehaviour
                 var itemsDropped = BattleSystem.DetermineItemsDropped(droppableItems);
                 
                 foreach (Item item in itemsDropped) {
-                    battleLog.UpdateLog($"{enemy.name} dropped a {item.name}!\n");
+                    battleLog.UpdateLog($"{enemy.Name} dropped a {item.name}!\n");
                     
                     playerCombatant.items.Add(item);
                 }
@@ -192,23 +192,25 @@ public class BattleController : MonoBehaviour
     {
         var results = BattleSystem.DetermineAttackDamage(currentParticipant, target);
 
-        battleLog.UpdateLog($"{currentParticipant.name} attacks!.\n");
+        battleLog.UpdateLog($"{currentParticipant.Name} attacks!.\n");
 
         yield return new WaitForSeconds(0.5f);
 
         switch (results.attackType)
         {
             case AttackResults.AttackType.Hit:
-                battleLog.UpdateLog($"{target.name}'s Hit Points have been reduced by {results.damage}.\n");
+                battleLog.UpdateLog($"{target.Name}'s Hit Points have been reduced by {results.damage}.\n");
 
                 break;
             case AttackResults.AttackType.CriticalHit:
-                battleLog.UpdateLog($"Crit!! {target.name} took {results.damage} damage!\n");
+                battleLog.UpdateLog($"Critical hit!!!\n");
+                
+                battleLog.UpdateLog($"{target.Name}'s Hit Points have been reduced by {results.damage}.\n");
                 
                 break;
             
             case AttackResults.AttackType.Missed:
-                battleLog.UpdateLog($"Missed! {target.name} dodged the attack.\n");
+                battleLog.UpdateLog($"Missed! {target.Name} dodged the attack.\n");
                 
                 soundManager.PlaySound(soundManager.miss);
                 
@@ -227,7 +229,8 @@ public class BattleController : MonoBehaviour
             }
         }
 
-        target.stats.hitPoints -= results.damage;
+        target.InflictDamage(results.damage);
+        // target.stats.hitPoints -= results.damage;
         
         heroStatsUI.RefreshHeroStats();
         
@@ -245,7 +248,7 @@ public class BattleController : MonoBehaviour
     {
         if (battleState == BattleState.PlayerTurn)
         {
-            battleLog.UpdateLog($"{currentParticipant.name} started to run away...\n");
+            battleLog.UpdateLog($"{currentParticipant.Name} started to run away...\n");
 
             StartCoroutine(FleeRoutine());
         }
@@ -267,7 +270,7 @@ public class BattleController : MonoBehaviour
         {
             soundManager.PlaySound(soundManager.run);
             
-            battleLog.UpdateLog($"{currentParticipant.name} escaped!\n");
+            battleLog.UpdateLog($"{currentParticipant.Name} escaped!\n");
             
             battleState = BattleState.Ended;
         }
@@ -285,8 +288,8 @@ public class BattleController : MonoBehaviour
     
     public void UseSpell(Spell spell) {
         if (battleState == BattleState.SpellSelect 
-            && currentParticipant.stats.magicPoints > spell.mpCost) {
-            currentParticipant.stats.magicPoints -= spell.mpCost;
+            && currentParticipant.Stats.MagicPoints > spell.mpCost) {
+            currentParticipant.Stats.MagicPoints -= spell.mpCost;
             
             var targets = spell.DetermineTarget(participants);
             

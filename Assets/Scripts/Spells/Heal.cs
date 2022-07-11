@@ -15,12 +15,12 @@ public class Heal : Spell
     foreach (var participant in targets) {
       var randomizedRecoveryAmount = (int)(recoveryAmount * Random.Range(0.6f, 1f));
       
-      participant.stats.hitPoints += randomizedRecoveryAmount;
+      participant.Stats.HitPoints += randomizedRecoveryAmount;
 
-      battleLog.UpdateLog($"{participant.name} chanted {name} and recovered {randomizedRecoveryAmount} hit points!\n");
+      battleLog.UpdateLog($"{participant.Name} chanted {name} and recovered {randomizedRecoveryAmount} hit points!\n");
       
-      if (participant.stats.hitPoints > participant.stats.maxHitPoints) {
-        participant.stats.hitPoints = participant.stats.maxHitPoints;
+      if (participant.Stats.HitPoints > participant.Stats.MaxHitPoints) {
+        participant.Stats.HitPoints = participant.Stats.MaxHitPoints;
       }
     }
   }

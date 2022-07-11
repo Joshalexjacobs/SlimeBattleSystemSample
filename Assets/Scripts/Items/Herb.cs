@@ -5,12 +5,12 @@ public class Herb : Item {
   public int recoveryAmount = 15;
   
   public override void UseItem (Participant target, BattleLog battleLog) {
-    target.stats.hitPoints += recoveryAmount;
+    target.Stats.HitPoints += recoveryAmount;
     
-    battleLog.UpdateLog($"{target.name} used a {name} and recovered {recoveryAmount} hit points!\n");
+    battleLog.UpdateLog($"{target.Name} used a {name} and recovered {recoveryAmount} hit points!\n");
 
-    if (target.stats.hitPoints > target.stats.maxHitPoints) {
-      target.stats.hitPoints = target.stats.maxHitPoints;
+    if (target.Stats.HitPoints > target.Stats.MaxHitPoints) {
+      target.Stats.HitPoints = target.Stats.MaxHitPoints;
     }
   }
   
